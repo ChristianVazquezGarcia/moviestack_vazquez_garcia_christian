@@ -12,7 +12,7 @@
     <div class="w-full">
         <div class="w-full h-auto flex flex-col space-y-8  text-white bg-black">
         
-            <div class="w-full bg-black">
+            <div class="w-full bg-black sticky top-0 ">
                 <div class="w-full h-20 flex justify-between  text-white bg-black pr-3 sm:h-16">
                     <div class="flex">
                         
@@ -35,17 +35,32 @@
         </header>
     
         <main>
+
+    
+            <search class=" w-[80%] flex flex-row justify-between text-black relative">
+                <select id="selectGenre" class="max-md:w-[45%] w-[35%] text-purple-200 rounded bg-[#19193e] " name="genre"  >
+                    
+                    
+                </select>
+
+                
+                <input class="rounded max-md:w-[50%] text-purple-200 bg-[#511088] justify-self-end" type="text" name="" id="search">
+                    
+                <img src="../images/lupa.png" alt="search" class="h-4 absolute right-1 top-1 mr-1">
+                </div>
+            </search>
+           </div>
             
     
 
         </main>
     
-        <footer class="w-full h-20  border-2 border-purple-400 flex flex-row items-center justify-center">
-            <p>MindHub - Cohort N</p>
+        <footer class="w-full h-20  border-2 border-purple-400 flex flex-row items-center justify-center bg-black text-white">
+            <p>Moviestack</p>
     
         </footer>
     <script src="../script/data.js" ></script>
-    <script src="../script/main.js"></script>
+    <script type="module" src="../script/main.js"></script>
     </div>
 </body>
 </html>

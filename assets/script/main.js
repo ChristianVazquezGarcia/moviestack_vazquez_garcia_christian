@@ -1,16 +1,6 @@
-function card(lista){
-let template=" ";
-    for (const iterator of lista) {
-    template+=`<article>
-    <img src="${iterator.image} " alt="movie advertisement">
-    <h4>${iterator.title}</h4>
-    <h6>${iterator.tagline}</h6>
-    <p>${iterator.overview}</p>
-    </article>
-`
-}
-return template;
-}
+import {card, renderCards, createOptionsSelect, filtrarPorNombre, filterForGenre} from "./module/functions.js"
+//Crea las tarjetas funcion card
+
 
 
 //CreoElContenedor dodne voy a almacenar los cards
@@ -19,12 +9,11 @@ divContenedorMovie.setAttribute("id","contenedorMovie");
 
 
 
+//introduce las tarjetas en el html
 
-function renderCards(cards, elemento){
-    elemento.innerHTML = cards;
-}
 
 //Agrego al div contenedor las cards
+
 let movies = card(moviesList)
 renderCards(movies, divContenedorMovie);
 
@@ -48,6 +37,11 @@ divContenedorMovie.className=" flex flex-wrap w-4/5 gap-8 justify-center rounded
 let article= divContenedorMovie.querySelectorAll("article")
 //esto me devolvio un array, recorro ese array de articles y les asigno clases
 
+/**
+ * Profe, mejore el codigo en base a lo que me dijo 
+ * la otra vez y ahora agregue las clases directo en el
+ * texto en vez de agregarla con funciones. Dejo las funciones comentadas
+
 function asignoClases(vec, clases){
     //recorro el array de articulos
     let aux=" "
@@ -67,11 +61,7 @@ function sobreEscriboClases(vec, clases) {
         
     }
 }
-
-
-
-
-
+ */
 
 let h4 =divContenedorMovie.querySelectorAll("article h4");
 
@@ -81,28 +71,104 @@ let pArticulos=divContenedorMovie.querySelectorAll("article>p");
 
 
 
-//Le quiero poner padding a las fotos, hago lo mismo que hice para agregarle clases a los articulos 
-
-//invoco la funcion para agregar las clases de los articulos
-let clasesArticulos="flex flex-col w-1/5 items-center gap-2  object-cover border-solid border-2 border-blue-400 rounded-md max-md:w-full shadow-lg shadow-indigo-900"
-sobreEscriboClases(article,clasesArticulos);
-/*let clasesArticulosNuevos=""
-asignoClases(article, clasesArticulosNuevos)
-*/
-
-//invoco la funcion para agregar las clases de los titulos
-/*asignoClasesTitulosArt(h4, clasesTitulosArt)*/
-
-let clasesTitulosArt= "text-lg font-mono font-bold text-purple-600"
-sobreEscriboClases(h4,clasesTitulosArt)
-//invoco la funcion para agregar las clases de los subtitulos
-let claseOneh6= "italic  underline text-purple-400"
-sobreEscriboClases(h6, claseOneh6)
-//invoco la funcion para agregar las clases de los parrafos
-let clasesParrafosArt="text-sm line-clamp-3 hover:line-clamp-none max-md:line-clamp-none text-violet-300"
-sobreEscriboClases(pArticulos,clasesParrafosArt)
-
-
 //le pongo clases al main
-main.className="flex flex-col items-center"
+main.className="flex flex-col items-center gap-16"
 
+ 
+
+//Como lo hago?
+/**
+ * 1)entro al vector de objetos y a su vez entro a la propiedad de generos
+ * 2)si el genero encontrado es igual con el del valor, entonces me quedo con el objeto.
+ * 3)Donde pongo el objeto?
+ * en un nuevo vector
+ * 4)Recorro el vector nuevo preguntando si el objeto seleccionado es del mismo nombre buscado
+ * 
+ * 5)si lo es, utilizo la funcion Cards y le introduzco el nuevo vector con la pelicula ya "Filtrada"
+ * o puedo hacer una nueva funcion exactmente igual para un solo objetp
+ * 6) si no lo es entonces pongo q no existe pelicula con ese nombre
+ * ----------------
+ * 
+ */
+
+
+
+
+
+//Busco todos los tipos de generos y los insertos en el select
+let genres= new Set (moviesList.map(movie=>movie.genres).flat())
+let select = document.getElementById("selectGenre")
+
+
+createOptionsSelect(genres,select)
+
+
+
+ 
+
+let search = document.getElementById("search")
+
+
+search.addEventListener("input", ()=> {
+    
+    //Ejecuto la funcion de filtrarPorNombre
+    const filtroNombre = filtrarPorNombre(moviesList, search.value)
+    let movie
+    if(select.value=="genre"){
+    movie = card(filtroNombre)
+    renderCards(movie, divContenedorMovie)
+    }
+    else{
+    const filterMovieForGenre = filterForGenre(filtroNombre, select.value)
+    movie = card(filterMovieForGenre)
+    renderCards(movie, divContenedorMovie)
+    }
+    
+    
+} )
+
+
+
+
+
+
+//busco el valor seleccionado en el select
+//con el valor seleccionado busco la/s pelicula/s q coincidan
+//muestro las peliculas
+
+let valorSeleccionado = select.value
+
+select.addEventListener("input", ()=>{
+    const filtroNombre = filtrarPorNombre(moviesList, search.value)
+    let movie
+    if(select.value=="genre"){
+    movie = card(filtroNombre)
+    renderCards(movie, divContenedorMovie)
+    }
+    else{
+    const filterMovieForGenre = filterForGenre(filtroNombre, select.value)
+    movie = card(filterMovieForGenre)
+    renderCards(movie, divContenedorMovie)
+    }
+    
+    
+    
+    
+})
+
+
+
+
+
+
+/**
+ * const filtroNombre = filtrarPorNombre(moviesList, search.value)
+    const filterMovieForGenre = filterForGenre(filtroNombre, select.value)
+    let movie = card(filterMovieForGenre)
+    renderCards(movie, divContenedorMovie)
+ * 
+ * 
+ */
+
+
+    //Agrego el detalle en las cards de las pelis
