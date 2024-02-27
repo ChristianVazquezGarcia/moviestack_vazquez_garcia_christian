@@ -14,8 +14,7 @@ divContenedorMovie.setAttribute("id","contenedorMovie");
 
 //Agrego al div contenedor las cards
 
-let movies = card(moviesList)
-renderCards(movies, divContenedorMovie);
+
 
 
 //Agrego al main el div contenedor
@@ -63,11 +62,11 @@ function sobreEscriboClases(vec, clases) {
 }
  */
 
-let h4 =divContenedorMovie.querySelectorAll("article h4");
+// let h4 =divContenedorMovie.querySelectorAll("article h4");
 
-let h6 =divContenedorMovie.querySelectorAll("article>h6");
+// let h6 =divContenedorMovie.querySelectorAll("article>h6");
 
-let pArticulos=divContenedorMovie.querySelectorAll("article>p");
+// let pArticulos=divContenedorMovie.querySelectorAll("article>p");
 
 
 
@@ -96,36 +95,13 @@ main.className="flex flex-col items-center gap-16"
 
 
 //Busco todos los tipos de generos y los insertos en el select
-let genres= new Set (moviesList.map(movie=>movie.genres).flat())
-let select = document.getElementById("selectGenre")
-
-
-createOptionsSelect(genres,select)
+/** 2*/
 
 
 
  
 
-let search = document.getElementById("search")
 
-
-search.addEventListener("input", ()=> {
-    
-    //Ejecuto la funcion de filtrarPorNombre
-    const filtroNombre = filtrarPorNombre(moviesList, search.value)
-    let movie
-    if(select.value=="genre"){
-    movie = card(filtroNombre)
-    renderCards(movie, divContenedorMovie)
-    }
-    else{
-    const filterMovieForGenre = filterForGenre(filtroNombre, select.value)
-    movie = card(filterMovieForGenre)
-    renderCards(movie, divContenedorMovie)
-    }
-    
-    
-} )
 
 
 
@@ -136,25 +112,8 @@ search.addEventListener("input", ()=> {
 //con el valor seleccionado busco la/s pelicula/s q coincidan
 //muestro las peliculas
 
-let valorSeleccionado = select.value
 
-select.addEventListener("input", ()=>{
-    const filtroNombre = filtrarPorNombre(moviesList, search.value)
-    let movie
-    if(select.value=="genre"){
-    movie = card(filtroNombre)
-    renderCards(movie, divContenedorMovie)
-    }
-    else{
-    const filterMovieForGenre = filterForGenre(filtroNombre, select.value)
-    movie = card(filterMovieForGenre)
-    renderCards(movie, divContenedorMovie)
-    }
-    
-    
-    
-    
-})
+
 
 
 
@@ -172,3 +131,61 @@ select.addEventListener("input", ()=>{
 
 
     //Agrego el detalle en las cards de las pelis
+
+
+
+const url = "https://moviestack.onrender.com/api/movies"
+const init = {
+    method: "GET",
+    headers: {
+        "x-api-key" : "0ff70d54-dc0b-4262-9c3d-776cb0f34dbd"
+    }
+}
+fetch( url, init )
+    .then( response => response.json() )
+    .then( datos =>{
+        console.log(datos.movies);
+        
+        let movies = card(datos.movies)
+        renderCards(movies, divContenedorMovie)
+
+        let genres= new Set (datos.movies.map(movie=>movie.genres).flat())/*1*/
+        let select = document.getElementById("selectGenre")
+        createOptionsSelect(genres,select)
+
+        let search = document.getElementById("search")
+
+        search.addEventListener("input", ()=> {/**3*/
+    
+        //Ejecuto la funcion de filtrarPorNombre
+        const filtroNombre = filtrarPorNombre(datos.movies, search.value)
+        let movie
+        if(select.value=="genre"){
+        movie = card(filtroNombre)
+        renderCards(movie, divContenedorMovie)
+        }
+        else{
+        const filterMovieForGenre = filterForGenre(filtroNombre, select.value)
+        movie = card(filterMovieForGenre)
+        renderCards(movie, divContenedorMovie)
+        }
+        } )
+
+
+        select.addEventListener("input", ()=>{/*** 4*/
+        const filtroNombre = filtrarPorNombre(datos.movies, search.value)
+        let movie
+        if(select.value=="genre"){
+        movie = card(filtroNombre)
+        renderCards(movie, divContenedorMovie)
+        }
+        else{
+        const filterMovieForGenre = filterForGenre(filtroNombre, select.value)
+        movie = card(filterMovieForGenre)
+        renderCards(movie, divContenedorMovie)
+        }
+        })
+
+
+    } )
+    .catch( err => console.log(err) ) 
