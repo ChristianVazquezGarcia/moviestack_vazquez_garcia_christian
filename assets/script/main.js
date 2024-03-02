@@ -1,4 +1,4 @@
-import {card, renderCards, createOptionsSelect, filtrarPorNombre, filterForGenre} from "./module/functions.js"
+import {card, renderCards, createOptionsSelect, filtrarPorNombre, filterForGenre, cardFavorita} from "./module/functions.js"
 //Crea las tarjetas funcion card
 
 
@@ -7,7 +7,8 @@ import {card, renderCards, createOptionsSelect, filtrarPorNombre, filterForGenre
 let divContenedorMovie = document.createElement("div");
 divContenedorMovie.setAttribute("id","contenedorMovie");
 
-
+let mainFav = document.getElementById("mainFav")
+console.log(mainFav);
 
 //introduce las tarjetas en el html
 
@@ -186,6 +187,99 @@ fetch( url, init )
         }
         })
 
+        let arrayMoviesFav =[];
+        
+        let moviesFavoritas = JSON.parse(localStorage.getItem("favoritas")) || [] 
+        arrayMoviesFav=moviesFavoritas
+        let peliculasPaMostrar =JSON.parse(localStorage.getItem("peliculasNoFaveadas"))||[]
+        console.log(peliculasPaMostrar);
+        let peliculas = datos.movies
+            
 
+        //let peliculasNoSeleccionadas = peliculas.filter(movie => !arrayMoviesFav.includes(movie))
+        
+        
+        
+
+        
+        divContenedorMovie.addEventListener("input", (e)=>{
+            let a = e.target.checked
+            console.log(a);
+            if (a) {
+                    let b = e.target.dataset.id;
+                    
+                    let movieFav = datos.movies.find(movie=>movie.id==b)
+                    console.log(movieFav);
+                    arrayMoviesFav.push(movieFav)//pusheo
+                    localStorage.setItem("favoritas",JSON.stringify(arrayMoviesFav))
+                    let peliculasNoSeleccionadas=[]
+                            if (peliculasPaMostrar.length==0) {
+                                peliculasNoSeleccionadas = peliculas.filter(movieFav)
+                               
+                            }
+                            else{
+                                
+                                peliculasNoSeleccionadas = peliculasPaMostrar.filter(movieFav)
+                            }
+                            localStorage.setItem("peliculasNoFaveadas",JSON.stringify(peliculasNoSeleccionadas))
+                    
+                    //console.log(prliculasNoFaveadas);
+                    //peliculas=prliculasNoFaveadas
+                   // let peliculasFavoritas = cardFavorita(arrayMoviesFav)
+                    //array que me filtre las peliculas cuyo id es el mismo que en fav
+
+                    
+
+                    //y si mando a local storage las peliculas filtradas sin los favs?
+                    
+
+                    //mando a local storage
+                     
+                    
+                    
+                    //que me recorra el vector de peliculas y las que tengan fav que las deje marcadas
+                    
+            }
+                    
+            
+        })
+
+
+       
+        // console.log(moviesFavoritas);
+        // arrayMoviesFav=moviesFavoritas
+        
+        
+        //let peliculasNoSeleccionadas = peliculas.filter(movie => !moviesFavoritas.includes(movie))
+        //console.log(peliculasNoSeleccionadas);
+        // peliculas=peliculasNoSeleccionadas
+        
+        //console.log(peliculasNoSeleccionadas);
+        //Que quiero?
+        //Que me imprima todas las peliculas pero las que estan en favoritas, osea, fueron seleccionadas, las deje marcadas como seleccionadas
+
+        //Busco los favoritos y las peliculas no favoritas
+        //Favoritos guardados en el localStorage
+        //Otras peliculas no favoritas, para eso, uso las favoritas y voy filtrando
+        //let peliculasNoFavoritas = JSON.parse(localStorage.getItem("prliculasNoFaveadas"))||[]
+        //console.log(peliculasNoFavoritas);
+
+        //despues las favoritas las paso por cardFavoritas, las otras por card y despues concateno ambas y despues imprimo
+        /*let cardsFAVORITAS=cardFavorita(moviesFavoritas)
+        console.log(cardsFAVORITAS);
+        let cardsNormales=card(peliculasNoFavoritas)
+        console.log(cardsNormales);
+        let todasLasCards= cardsFAVORITAS.concat(' ', cardsNormales)
+        console.log(todasLasCards);
+        renderCards(todasLasCards, divContenedorMovie)*/
+        
+       
+        console.log(peliculasPaMostrar);
     } )
     .catch( err => console.log(err) ) 
+
+// function hacerCartasDistintas(todasPElis,PElisFavs) {
+//     let pelisSinFav=todasPElis.filter(movie=>movie.id!= pelisSinFav.forEach(movie => {
+//         return movie.id
+//     }))
+// }
