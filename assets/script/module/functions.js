@@ -2,7 +2,7 @@ export function templateImgTab(element) {
     //Va a agarrar el objeto dado por id y va a tomar la imagen y crear una tabla templateImgTab
     //Creo variable con el texto de las etiquetas img y tr
     let aux=`
-    <img class="w-11/12 shadow-lg shadow-violet-900" src="${element.image}" alt="movie image">
+    <img class="w-11/12 shadow-lg shadow-violet-900" src="https://moviestack.onrender.com/static/${element.image}" alt="movie image">
     <table>
         <tbody>
             <tr>
@@ -85,17 +85,46 @@ export function insertTemplate(template1, template2, where1, where2) {
 export function card(lista){
     let template=" ";
         for (const iterator of lista) {
-        template+=`<article class="flex flex-col w-1/5 items-center gap-2  object-cover border-solid border-2 border-blue-400 rounded-md max-md:w-full shadow-lg shadow-indigo-900">
-        <img src="${iterator.image} " alt="movie advertisement">
+        template+=`<article class="flex flex-col w-1/5 items-center gap-2  object-cover border-solid border-2 border-blue-400 rounded-md max-md:w-full shadow-lg shadow-indigo-900 responsive">
+        
+        <img src="https://moviestack.onrender.com/static/${iterator.image} " alt="movie advertisement">
         <h4 class="text-lg font-mono font-bold text-purple-600">${iterator.title}</h4>
         <h6 class="italic  underline text-purple-400">${iterator.tagline}</h6>
         <p class="text-sm line-clamp-3 hover:line-clamp-none max-md:line-clamp-none text-violet-300">${iterator.overview}</p>
+       
+        <div class="flex flex-row justify-around justify-self-end w-full responsive"> 
+        
+        <img  class="w-6 h-6 absolute" src="../images/dislike.png" alt="dislike">
+        <input type="checkbox" id="favButton" data-id="${iterator.id}" class="w-6 h-6 sticky top-0"  value="fav"  />
         <a class="underline" href="./details.html?id=${iterator.id}">See details</a>
+        </div>
         </article>
     `
     }
     return template;
     }
+
+    export function cardFavorita(lista){
+        let template=" ";
+            for (const iterator of lista) {
+            template+=`<article class="flex flex-col w-1/5 items-center gap-2  object-cover border-solid border-2 border-blue-400 rounded-md max-md:w-full shadow-lg shadow-indigo-900 responsive">
+            
+            <img src="https://moviestack.onrender.com/static/${iterator.image} " alt="movie advertisement">
+            <h4 class="text-lg font-mono font-bold text-purple-600">${iterator.title}</h4>
+            <h6 class="italic  underline text-purple-400">${iterator.tagline}</h6>
+            <p class="text-sm line-clamp-3 hover:line-clamp-none max-md:line-clamp-none text-violet-300">${iterator.overview}</p>
+           
+            <div class="flex flex-row justify-around justify-self-end w-full responsive"> 
+            
+            <img  class="w-6 h-6 absolute" src="../images/dislike.png" alt="dislike">
+            <input type="checkbox" id="favButton" data-id="${iterator.id}" class="w-6 h-6 sticky top-0"  value="fav"  checked/>
+            <a class="underline" href="./details.html?id=${iterator.id}">See details</a>
+            </div>
+            </article>
+        `
+        }
+        return template;
+        }
 
 export function renderCards(cards, elemento){
     
