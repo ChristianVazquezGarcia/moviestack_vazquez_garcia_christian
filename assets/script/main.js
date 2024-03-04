@@ -175,7 +175,7 @@ fetch( url, init )
             let a = e.target.checked
             console.log(a);
             if (a) {
-                    
+                console.log(a)
                     peliculasCompletas = peliculas10.map(movie=>{
                         if (movie.id == e.target.dataset.id) {
                             return { ...movie, fav: true }
@@ -188,13 +188,13 @@ fetch( url, init )
                     
                     localStorage.setItem("peliculasNoFaveadas",JSON.stringify(peliculasCompletas))
                     
+                    renderCards(card(peliculasCompletas), divContenedorMovie)
                     peliculas10=peliculasCompletas   
                     
         
                     let b = e.target.dataset.id;
                         let movieFav= peliculas10.find(movie=>movie.id==b)
                         arrayMoviesFav.push(movieFav)
-                        renderCards(card(peliculas10), divContenedorMovie)
 
                     localStorage.setItem("favoritas",JSON.stringify(arrayMoviesFav))     
             }
@@ -209,12 +209,12 @@ fetch( url, init )
                    
                 })
                 localStorage.setItem("peliculasNoFaveadas",JSON.stringify(peliculasCompletas))
-                    
+                
                 peliculas10=peliculasCompletas
+                renderCards(card(peliculas10), divContenedorMovie)
                 let b = e.target.dataset.id;
                         let movieFav= arrayMoviesFav.filter(movie=>movie.id!=b)
                         arrayMoviesFav=movieFav
-                        renderCards(card(peliculas10), divContenedorMovie)
                     localStorage.setItem("favoritas",JSON.stringify(arrayMoviesFav)) 
             }
             
@@ -226,10 +226,10 @@ fetch( url, init )
 
 
         //Aca van peliculaspamostrar
-        let movies = card(peliculasPaMostrar)
+        let movies = card(peliculasCompletas)
         renderCards(movies, divContenedorMovie)
         //aca tambien va peliculasPaMostrar
-        let genres= new Set (peliculasPaMostrar.map(movie=>movie.genres).flat())/*1*/
+        let genres= new Set (peliculasCompletas.map(movie=>movie.genres).flat())/*1*/
         let select = document.getElementById("selectGenre")
         createOptionsSelect(genres,select)
 
@@ -239,7 +239,7 @@ fetch( url, init )
         //aca tambien va peliculasPaMostrar
 
         //Ejecuto la funcion de filtrarPorNombre
-        const filtroNombre = filtrarPorNombre(peliculasPaMostrar, search.value)
+        const filtroNombre = filtrarPorNombre(peliculasCompletas, search.value)
         let movie
         if(select.value=="genre"){
         movie = card(filtroNombre)
@@ -256,7 +256,7 @@ fetch( url, init )
         select.addEventListener("input", ()=>{/*** 4*/
         //aca tambien va peliculasPaMostrar
 
-        const filtroNombre = filtrarPorNombre(peliculasPaMostrar, search.value)
+        const filtroNombre = filtrarPorNombre(peliculasCompletas, search.value)
         let movie
         if(select.value=="genre"){
         movie = card(filtroNombre)

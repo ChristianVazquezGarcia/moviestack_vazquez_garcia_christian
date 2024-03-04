@@ -101,9 +101,10 @@ export function insertTemplate(template1, template2, where1, where2) {
            
             <div class="flex flex-row justify-around justify-self-end w-full responsive"> 
             <div class="flex">
-            <label for="favButton" class="select-none cursor-pointer rounded-lg border-2 border-gray-200
-            py-3 px-6 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200 "> FAV
-            <input type="checkbox" id="favButton" data-id="${iterator.id}" class="peer hidden"  value="fav"  ${checked}/>
+            <input type="checkbox" id="favButton${iterator.id}" data-id="${iterator.id}" class="peer hidden"  value="fav"  ${checked}/>
+            <label for="favButton${iterator.id}" class="select-none cursor-pointer rounded-lg border-2 border-gray-200
+            py-3 px-6 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200 "> 
+            FAV
             </label>
             </div>
             <a class="underline text-white" href="./details.html?id=${iterator.id}">See details</a>
@@ -121,8 +122,13 @@ export function insertTemplate(template1, template2, where1, where2) {
            
             <div class="flex flex-row justify-around justify-self-end w-full responsive"> 
             
-            <img  class="w-6 h-6 absolute" src="../images/dislike.png" alt="dislike">
-            <input type="checkbox" id="favButton" data-id="${iterator.id}" class="w-6 h-6 sticky top-0"  value="fav"  ${checked}/>
+            <div class="flex">
+            <input type="checkbox" id="favButton${iterator.id}" data-id="${iterator.id}" class="peer hidden"  value="fav"  ${checked}/>
+            <label for="favButton${iterator.id}" class="select-none cursor-pointer rounded-lg border-2 border-gray-200
+            py-3 px-6 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200 "> 
+            FAV
+            </label>
+            </div>
             <a class="underline" href="./details.html?id=${iterator.id}">See details</a>
             </div>
             </article>
@@ -136,7 +142,7 @@ export function insertTemplate(template1, template2, where1, where2) {
 export function renderCards(cards, elemento){
     
     if(cards==" "){
-        elemento.innerHTML= `<h2 class="text-2xl flex flex-row justify-center items-center"> "Your movie is not found" </h2>`
+        elemento.innerHTML= `<h2 class="text-2xl flex flex-row justify-center items-center text-white"> "There are no movies" </h2>`
         
     }
     else{
